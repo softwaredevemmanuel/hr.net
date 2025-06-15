@@ -12,21 +12,41 @@ namespace api.Controllers
     public class StaffController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<StaffModel> GetStaffName()
+        public ActionResult<IEnumerable<StaffModel>> GetStaffName()
         {
-            return StaffRepository.Staff;
+            return Ok (StaffRepository.Staff);
         }
 
         [HttpGet("{id:int}")]
-        public StaffModel GetStaffById(int id)
+        public ActionResult<StaffModel> GetStaffById(int id)
         {
-            return StaffRepository.Staff.Where(n =>n.StaffId == id).FirstOrDefault();
+            if (id <= 0)
+            {
+                return BadRequest("Id is not valid");
+            }
+
+            var result = StaffRepository.Staff.Where(n => n.StaffId == id).FirstOrDefault();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
         [HttpGet("{name:alpha}")]
-        public StaffModel GetStaffByname(string name)
+        public ActionResult<StaffModel> GetStaffByname(string name)
         {
-            return StaffRepository.Staff.Where(n =>n.FirstName == name).FirstOrDefault();
+            if (string.IsNullOrEmpty(name))
+            {
+                return BadRequest(name);
+            }
+            var result = StaffRepository.Staff.Where(n => n.FirstName == name).FirstOrDefault();
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
+
         [HttpPut("{id:int}")]
         public StaffModel UpdateStaffById(int id)
         {
@@ -34,9 +54,22 @@ namespace api.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public StaffModel DeleteStaffById(int id)
+        public ActionResult<StaffModel> DeleteStaffById(int id)
         {
-            return StaffRepository.Staff.Where(n => n.StaffId == id).FirstOrDefault();
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var result = StaffRepository.Staff.Where(n => n.StaffId == id).FirstOrDefault();
+
+            if (result == null)
+            {
+                return NotFound();
+
+            }
+            StaffRepository.Staff.Remove(result);
+            return Ok(result);
         }
     }
 }

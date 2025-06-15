@@ -33,3 +33,4 @@
 /Users/wikiwoo/Desktop/hr.net/api/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
 /Users/wikiwoo/Desktop/hr.net/api/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /Users/wikiwoo/Desktop/hr.net/api/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/wikiwoo/Desktop/hr.net/api/obj/Debug/net9.0/api.sourcelink.json
